@@ -1,0 +1,75 @@
+<html>
+<body>
+    <div class="login">
+        <h1>
+        <legend>Medical Charges Prediction</legend>
+        </h1>
+       <form action="{{ url_for('predict_datapoint')}}" method="post">
+        
+        <div class="mb-3">
+            <label class="form-label">Age</label>
+            <input class="form-control" type="number" name="age"
+                placeholder="Enter your age" min='1' max='100' />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">BMI</label>
+            <input class="form-control" type="text" name="bmi"
+                placeholder="Enter your Body Mass Index(BMI)" min='10' max='80' />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">children</label>
+            <input class="form-control" type="number" name="children"
+                placeholder="How many children do you have?" min='0' max='20' />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Gender</label>
+            <select class="form-control" name="sex" placeholder="Enter you Sex" required>
+                <option class="placeholder" selected disabled value="">Select your Gender</option>
+                <option value="male">
+                    Male
+                </option>
+                <option value="female">
+                    Female
+                </option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Smoker</label>
+            <select class="form-control" name="smoker" placeholder="Are you Smoker?" required>
+                <option class="placeholder" selected disabled value="">Select your Gender</option>
+                <option value="yes">
+                    Yes
+                </option>
+                <option value="no">
+                    No
+                </option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Region</label>
+            <select class="form-control" name="region" placeholder="Enter you region" required>
+                <option class="placeholder" selected disabled value="">Your region.</option>
+                <option value="southwest">
+                    South West
+                </option>
+                <option value="southeast">
+                    South East
+                </option>
+                <option value="northwest">
+                    North West
+                </option>
+                <option value="northeast">
+                    North East
+                </option>
+            </select>
+        </div>
+        
+        <div class="mb-3">
+            <input class="btn btn-primary" type="submit" value="Predict your Medical Charge" required />
+        </div>
+    </form>
+    <h2>
+       THE  prediction is {{results}}
+    </h2>
+   <body>
+</html>

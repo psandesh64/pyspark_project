@@ -1,0 +1,1 @@
+{"class":"org.apache.spark.ml.feature.VectorAssembler","timestamp":1712715140663,"sparkVersion":"3.5.1","uid":"VectorAssembler_6cba2c3d1d48","paramMap":{"inputCols":["age_imputed","bmi_imputed","children_imputed"],"outputCol":"numerical_features"},"defaultParamMap":{"handleInvalid":"error","outputCol":"VectorAssembler_6cba2c3d1d48__output"}}
