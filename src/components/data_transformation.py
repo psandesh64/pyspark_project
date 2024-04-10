@@ -3,17 +3,10 @@ import sys
 from dataclasses import dataclass
 from src.logger import logging
 from src.exception import CustomException
-# from src.utils import save_object
 
 from pyspark.sql import SparkSession
 from pyspark.ml import Pipeline
 from pyspark.ml.feature import StringIndexer,OneHotEncoder,VectorAssembler,StandardScaler,Imputer
-from pyspark.ml.linalg import Vectors
-from pyspark.sql.functions import col
-# from pyspark.ml.regression import RandomForestRegressor
-# from pyspark.ml.evaluation import RegressionEvaluator
-
-from src.components.data_ingestion import DataIngestion
 
 @dataclass
 class DataTransformationConfig:
@@ -78,29 +71,13 @@ class DataTransformation:
             test_transformed = input_features_test_arry.select("features", target_column_name)
             train_transformed.show()
 
-            # save_object(
-            #     file_path = self.data_transformation_config.preprocessor_obj_file_path,
-            #     obj = preprocessing_model
-            # )
             file_path = self.data_transformation_config.preprocessor_obj_file_path
             preprocessing_model.write().overwrite().save(file_path)
-
 
             return (
                 train_transformed,
                 test_transformed
-                # train_transformed.rdd.map(lambda row: (Vectors.dense(row[0]), row[1])),
-                # test_transformed.rdd.map(lambda row: (Vectors.dense(row[0]), row[1])),
-                # self.data_transformation_config.preprocessor_obj_file_path
             )
 
         except Exception as e:
             raise CustomException(sys,e)
-        
-
-# # Example usage
-# data_ingestion = DataIngestion()
-# train_data_path,test_data_path = data_ingestion.initiate_data_ingestion()
-
-# data_transformation = DataTransformation()
-# train_transformed_df, test_transformed_df = data_transformation.initiate_data_transformation(train_data_path, test_data_path)

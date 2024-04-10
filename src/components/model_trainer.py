@@ -1,8 +1,9 @@
 import os
 import sys
 from dataclasses import dataclass
+from src.exception import CustomException
+from src.logger import logging
 
-from pyspark.sql import SparkSession
 from pyspark.ml.regression import (
     RandomForestRegressor,
     DecisionTreeRegressor,
@@ -11,11 +12,8 @@ from pyspark.ml.regression import (
 )
 from pyspark.ml.evaluation import RegressionEvaluator
 from pyspark.ml.tuning import ParamGridBuilder, CrossValidator
-from pyspark.sql import Row
 
-from src.exception import CustomException
-from src.logger import logging
-# from src.utils import save_object
+
 
 @dataclass
 class ModelTrainerConfig:
@@ -43,13 +41,6 @@ class ModelTrainer:
                 "Gradient Boosting": ParamGridBuilder().addGrid(GBTRegressor.maxDepth, [2, 4, 6]).build(),
                 "Linear Regression": ParamGridBuilder().build()
             }
-            # lr = LinearRegression(featuresCol="features",labelCol="charges")
-            # regressor = lr.fit(train_transformed_df)
-            # print(regressor)
-            # print(regressor.coefficients)
-
-            # predictions_r = regressor.evaluate(test_transformed_df)
-            # predictions_r.predictions.show()
 
             evaluator = RegressionEvaluator(predictionCol="prediction",labelCol="charges",metricName="r2")
 
@@ -74,11 +65,6 @@ class ModelTrainer:
             regressor = best_model.fit(train_transformed_df)
             file_path = self.model_trainer_config.train_model_file_path
             regressor.write().overwrite().save(file_path)
-
-            # save_object(
-            #     file_path = self.model_trainer_config.train_model_file_path,
-            #     obj = best_model
-            # )
 
             return model_report[best_model_name]
 
